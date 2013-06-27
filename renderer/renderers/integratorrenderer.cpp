@@ -53,6 +53,9 @@ namespace embree
 
     /*! show progress to the user */
     showProgress = parms.getInt("showprogress",0);
+
+    /*! show stats to the user */
+    printStats = parms.getInt("printstats",1);
   }
   
   void IntegratorRenderer::renderThread()
@@ -145,16 +148,18 @@ namespace embree
     double dt = getSeconds()-t;
     if (showProgress) progress.end();
 
-     /*! print fps, render time, and rays per second */
-    std::ostringstream stream;
-    stream << "render  ";
-    stream.setf(std::ios::fixed, std::ios::floatfield);
-    stream.precision(2);
-    stream << 1.0f/dt << " fps, ";
-    stream.precision(0);
-    stream << dt*1000.0f << " ms, ";
-    stream.precision(3);
-    stream << atomicNumRays/dt*1E-6 << " Mrps";
-    std::cout << stream.str() << std::endl;
+    /*! print fps, render time, and rays per second*/
+    if(printStats) {
+      std::ostringstream stream;
+      stream << "render  ";
+      stream.setf(std::ios::fixed, std::ios::floatfield);
+      stream.precision(2);
+      stream << 1.0f/dt << " fps, ";
+      stream.precision(0);
+      stream << dt*1000.0f << " ms, ";
+      stream.precision(3);
+      stream << atomicNumRays/dt*1E-6 << " Mrps";
+      std::cout << stream.str() << std::endl;
+    }
   }
 }

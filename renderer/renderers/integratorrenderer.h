@@ -37,6 +37,8 @@ namespace embree
     /*! Renders a single frame. */
     void renderFrame(const Ref<Camera>& camera, const Ref<BackendScene>& scene, const Ref<ToneMapper>& toneMapper, Ref<SwapChain<> > film, int accumulate);
 
+    float getMrps();
+
   private:
 
     /*! Render function called once for each thread and frame. */
@@ -76,6 +78,7 @@ namespace embree
     Atomic atomicNumRays;          //!< for counting number of shoot rays
   private:
     bool showProgress;             //!< Set to true if user wants rendering progress shown
+    bool printStats;               //!< Set to true if user wants stats reported to console
     Progress progress;             //!< Progress printer
   };
 }
